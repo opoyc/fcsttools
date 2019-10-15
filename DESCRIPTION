@@ -1,28 +1,28 @@
 Package: fcsttools
 Title: Performs cross-validation task on time series data
-Version: 0.0.0.1
+Version: 0.0.0.2
 Authors@R: 
     person(given = "Obryan",
            family = "Poyser",
            role = c("aut", "cre"),
            email = "opoyserc@gmail.com")
-Description: Train/test sets separation in time series analysis has to take into account time dependencies. This performs cross-validation tasks.
+Description: Train/test sets sampling for time series analysis.
 License: GPL
 Encoding: UTF-8
 LazyData: true
 Depends: 
-    R (>= 3.5.1)
+    R (>= 3.4.4)
 Suggests: 
     knitr
     , rmarkdown
-Imports: dplyr
-    , purrr
-    , tibble
     , tsibble
     , feasts
     , MASS
-    , forecast
     , ggeffects
+Imports: dplyr
+    , purrr
+    , tibbles
+    , forecast
     , lubridate
     , tidyr
 VignetteBuilder: knitr
