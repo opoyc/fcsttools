@@ -1,0 +1,28 @@
+require(tidyverse)
+
+
+dat <- EuStockMarkets %>% 
+  as_tibble() %>% 
+  slice(1:100) %>% 
+  mutate(date=1:n())
+
+
+cv_size <- 6
+lag <- 3
+model <- lm
+
+cvts <- function(dat, cv_size, lag, model){
+  indexes <- 1:nrow(dat)
+  df_size <- nrow(dat)
+  test_start_index <- (df_size-cv_size+1)
+  test <- dat[test_start_index:df_size,]
+  y <- test["DAX"]
+  train_start <- test_start_index-lag
+  train_end <- df_size-lag
+  out <- map(train_start:train_end, function(i){
+    fit <- model(DAX~SMI+CAC+FTSE, data = dat[1:i,])
+    fitted <- data.frame(iter=predict.glm(fit, newdata = test))
+    })
+  bind_cols(y, out) %>% 
+    mutate_at(.vars = vars(iter:last_col()), .funs = ~.x-DAX)
+}
